@@ -5,8 +5,8 @@ require_relative 'lib/product_collection'
 
 current_path = File.dirname(__FILE__)
 
-collection = ProductCollection.from_dir(current_path + '/data')
-puts collection.sort!(by: 'amount', order: 'asc').to_a
+collection = ProductCollection.from_dir(current_path + '/data/visitka.xml')
+puts collection.sort!(by: 'price', order: '').to_a
 
 # collection.to_a.each { |product| puts product }
 
