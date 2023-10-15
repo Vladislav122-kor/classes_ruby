@@ -11,6 +11,23 @@ class Film < Product
     self.new(other_opts.merge(opts))
   end
 
+  def self.write_product(product)
+    puts 'Укажите название фильма'
+    title = STDIN.gets.chomp
+
+    puts 'Укажите год выпуска'
+    year = STDIN.gets.chomp
+
+    puts 'Укажите продюссера'
+    director = STDIN.gets.chomp
+
+    product.add_element 'book', {
+      'title' => title,
+      'year' => year,
+      'director_name' => director,
+    }
+  end
+
   def initialize(params)
     super
   

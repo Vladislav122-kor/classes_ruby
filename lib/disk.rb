@@ -10,6 +10,23 @@ class Disk < Product
   
     self.new(other_opts.merge(opts))
   end
+
+  def self.write_product(product)
+    puts 'Укажите название альбома'
+    album = STDIN.gets.chomp
+
+    puts 'Укажите исполнителя'
+    artist = STDIN.gets.chomp
+
+    puts 'Укажите жанр'
+    genre = STDIN.gets.chomp
+
+    product.add_element 'book', {
+      'album__name' => album,
+      'artist_name' => artist,
+      'genre' => genre,
+    }
+  end
   
   def initialize(params)
     super

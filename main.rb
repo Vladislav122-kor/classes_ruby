@@ -5,6 +5,50 @@ require_relative 'lib/product_collection'
 
 current_path = File.dirname(__FILE__)
 
+puts 'Вы хотите добавить товар?'
+if STDIN.gets.chomp == '+'
+  file_path = File.dirname(__FILE__) + '/data/visitka.xml'
+  doc = nil
+
+  begin
+    file = File.new(file_path)
+    doc = REXML::Document.new(file)
+    file.close
+  rescue
+    abort 'File was not found'
+  end
+
+  puts 'Какой товар вы хотите добавить?'
+  puts 'Book'
+  puts 'Movie'
+  puts 'Disk'
+
+  choice = STDIN.gets.chomp
+
+  puts 'Укажите стоимость продукта в рублях'
+  price = STDIN.gets.chomp
+
+  puts 'Укажите, сколько единиц продукта осталось на складе'
+  amount = STDIN.gets.chomp
+
+  products = doc.elements.find('products').first
+  product = products.add_element 'product', {
+    'price' => price,
+    'amount_available' => amount,
+  }
+
+  PRODUCT_TYPES = {
+    'Book' => Book,
+    'Movie' => Film,
+    'Disk' => Disk,
+  }
+  PRODUCT_TYPES[choice].write_product(product)
+  
+  file = File.new(file_path, 'w:UTF-8')
+  doc.write(file, 2)
+  file.close
+end
+
 collection = ProductCollection.from_dir(current_path + '/data/visitka.xml')
 puts collection.sort!(by: 'price', order: '').to_a
 

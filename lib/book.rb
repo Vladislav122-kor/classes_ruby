@@ -11,6 +11,23 @@ class Book < Product
     self.new(other_opts.merge(opts))
   end
 
+  def self.write_product(product)
+    puts 'Укажите название книги'
+    title = STDIN.gets.chomp
+
+    puts 'Укажите жанр книги'
+    genre = STDIN.gets.chomp
+
+    puts 'Укажите автора'
+    author = STDIN.gets.chomp
+
+    product.add_element 'book', {
+      'title' => title,
+      'genre' => genre,
+      'author_name' => author,
+    }
+  end
+
   def initialize(params)
     super
 
